@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class AppUserService implements UserDetailsService, IAppUserService {
 
-    private final AppUserRepository appUserRepository;
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
