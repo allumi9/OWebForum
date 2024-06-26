@@ -9,13 +9,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import java.util.logging.Logger;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-
-import static java.rmi.server.LogStream.log;
 
 @SpringBootApplication
 public class OWebForumApplication {
@@ -36,17 +33,14 @@ public class OWebForumApplication {
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
 
-			AppUser admin = new AppUser("password",
+			AppUser admin = new AppUser(
+					passwordEncoder.encode("password"),
 					"max@gmail",
 					"admin",
 					4, LocalDate.now(), roles, false, true);
 			appUserRepository.save(admin);
-
-
-
-			log("the init is done");
-
 		};
+
 	}
 
 }

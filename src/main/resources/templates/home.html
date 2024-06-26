@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,25 +81,10 @@
 </nav>
 <main>
     <div class="forum-section">
-        <h2>General Discussion</h2>
-        <div class="forum-thread">
-            <h3><a href="#">Welcome to the forum!</a></h3>
-            <p>Posted by Admin on May 30, 2024</p>
-        </div>
-        <div class="forum-thread">
-            <h3><a href="#">Introduce Yourself</a></h3>
-            <p>Posted by User123 on May 29, 2024</p>
-        </div>
-    </div>
-    <div class="forum-section">
-        <h2>Technical Support</h2>
-        <div class="forum-thread">
-            <h3><a href="#">How to reset your password</a></h3>
-            <p>Posted by SupportTeam on May 28, 2024</p>
-        </div>
-        <div class="forum-thread">
-            <h3><a href="#">FAQ: Common Issues</a></h3>
-            <p>Posted by SupportTeam on May 27, 2024</p>
+        <h2>Recent Posts</h2>
+        <div th:each="post : ${posts}" class="forum-thread">
+            <h3><a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}">Post Title</a></h3>
+            <p th:text="'Posted by ' + ${post.originalPoster.username} + ' on ' + ${#dates.format(post.createdAt, 'MMMM dd, yyyy')}">Posted by User on Date</p>
         </div>
     </div>
 </main>
