@@ -2,7 +2,6 @@ package com.oop.owebforum.services;
 
 import com.oop.owebforum.entities.AppUser;
 import com.oop.owebforum.repositories.AppUserRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,14 +10,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
 public class AppUserService implements UserDetailsService, IAppUserService {
 
-    @Autowired
     private AppUserRepository appUserRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public AppUserService(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder){
+        this.appUserRepository = appUserRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
