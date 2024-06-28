@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${postTitle}"></title>
+    <style>
+        h1{
+            font-family: "Roboto Light", serif;
+            align-content: center;
+            height: 75px;
+            background-color: #4CAF50;
+            color: white;
+        }
+        h3{
+            font-family: "Roboto Light", serif;
+            align-content: center;
+            width: 200px;
+            height: 50px;
+        }
+        p{
+            font-family: "Roboto Light", serif;
+            align-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<h1 th:text="${postTitle}">Post title</h1>
+<h3 th:text="'Posted by ' + ${op} + ' at ' + ${createdAt}">Posted by User at Date</h3>
+
+<p th:text="${content}">content</p>
+
+<button type="button" th:href="home"> Back </button>
+
+
+
+</body>
+</html>

@@ -1,5 +1,7 @@
 package com.oop.owebforum.controllers;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -7,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 public class AppUserController {
 
     @GetMapping("/user")
-    public String user(){
-        return "User access level";
+    public String getUser(@AuthenticationPrincipal UserDetails userDetails) {
+        return "User Details: " + userDetails.getUsername();
     }
 
 }

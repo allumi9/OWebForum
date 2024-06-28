@@ -13,5 +13,4 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findById(Long id);
-    List<Post> findAllByOrderByCreatedAtDesc();
 }

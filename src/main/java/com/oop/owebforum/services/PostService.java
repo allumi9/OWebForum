@@ -5,6 +5,8 @@ import com.oop.owebforum.entities.Post;
 import com.oop.owebforum.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
+
 import java.util.List;
 
 import java.util.Optional;
@@ -28,11 +30,12 @@ public class PostService implements  IPostService{
 
     public void createPost(Post post, AppUser originalPoster) {
         post.setOriginalPoster(originalPoster);
+        post.setCreatedAt(LocalDateTime.now());
         postRepository.save(post);
     }
 
-    public List<Post> getRecentPosts() {
-        return postRepository.findAllByOrderByCreatedAtDesc(); // Assuming you have a createdAt field in Post entity
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
     }
 
 }
