@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Forum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            background-color: #333;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 1rem;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem;
+            display: block;
+        }
+        nav ul li a:hover {
+            background-color: #575757;
+        }
+        main {
+            padding: 2rem;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .forum-section {
+            margin-bottom: 2rem;
+        }
+        .forum-section h2 {
+            margin-top: 0;
+        }
+        .forum-thread {
+            padding: 1rem;
+            border: 1px solid #ccc;
+            margin-bottom: 0.5rem;
+        }
+        .forum-thread:hover {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to the Online Forum</h1>
+</header>
+<nav>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">New Post</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Logout</a></li>
+    </ul>
+</nav>
+<main>
+    <div class="forum-section">
+        <h2>Recent Posts</h2>
+        <div th:each="post : ${posts}" class="forum-thread">
+            <h3><a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}">Post Title</a></h3>
+            <p th:text="'Posted by ' + ${post.originalPoster.username} + ' on ' + ${#dates.format(post.createdAt, 'MMMM dd, yyyy')}">Posted by User on Date</p>
+        </div>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2024 Online Forum. All rights reserved.</p>
+</footer>
+</body>
+</html>
