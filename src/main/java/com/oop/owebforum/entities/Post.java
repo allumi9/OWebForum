@@ -34,6 +34,4 @@ public class Post {
     private String content;
 
     private LocalDateTime createdAt;
-
-
 }

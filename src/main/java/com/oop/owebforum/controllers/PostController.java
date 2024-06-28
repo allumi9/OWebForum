@@ -2,6 +2,7 @@ package com.oop.owebforum.controllers;
 import com.oop.owebforum.entities.Post;
 import com.oop.owebforum.entities.AppUser;
 import com.oop.owebforum.repositories.PostRepository;
+
 import com.oop.owebforum.services.PostService;
 import com.oop.owebforum.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,7 @@ public class PostController {
             AppUser loggedInUser = optionalUser.get();
             postService.createPost(post, loggedInUser);
             return "redirect:/home";
+
         } else {
             return "redirect:/login?error";
         }

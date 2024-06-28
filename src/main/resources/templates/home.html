@@ -85,6 +85,7 @@
         <div th:each="post : ${posts}" class="forum-thread">
             <h3><a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}">Post Title</a></h3>
             <p th:text="'Posted by ' + ${post.originalPoster.username} + ' on ' + ${#temporals.format(post.createdAt, 'MMMM dd, yyyy')}">Posted by User on Date</p>
+
         </div>
     </div>
 </main>
