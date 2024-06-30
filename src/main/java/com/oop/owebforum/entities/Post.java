@@ -32,6 +32,9 @@ public class Post {
 
     private String title;
     private String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_name", nullable = false)
+    private Category category;
 
     private LocalDateTime createdAt;
 }

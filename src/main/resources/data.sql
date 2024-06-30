@@ -1,0 +1,9 @@
+INSERT INTO category (id, category_name) VALUES (1, 'Music');
+INSERT INTO category (id, category_name) VALUES (2, 'Games');
+INSERT INTO category (id, category_name) VALUES (3, 'Literature');
+INSERT INTO category (id, category_name) VALUES (4, 'Movies');
+INSERT INTO category (id, category_name) VALUES (5, 'Science');
+INSERT INTO category (id, category_name) VALUES (6, 'Politics');
+INSERT INTO category (id, category_name) VALUES (7, 'Sports');
+INSERT INTO category (id, category_name) VALUES (8, 'Pets');
+INSERT INTO category (id, category_name) VALUES (9, 'Other');

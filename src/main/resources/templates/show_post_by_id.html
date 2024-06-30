@@ -26,7 +26,7 @@
 <body>
 
 <h1 th:text="${postTitle}">Post title</h1>
-<h3 th:text="'Posted by ' + ${op} + ' at ' + ${createdAt}">Posted by User at Date</h3>
+<h3 th:text="'Posted by ' + ${op} + ' at ' + ${createdAt} + ' in ' + ${category}">Posted by User at Date</h3>
 
 <p th:text="${content}">content</p>
 

@@ -34,7 +34,7 @@ public class OWebForumApplication {
 			roles.add(adminRole);
 
 			AppUser admin = new AppUser(
-					passwordEncoder.encode("password"),
+					passwordEncoder.encode("1"),
 					"max@gmail",
 					"admin",
 					4, LocalDate.now(), roles, false, true);
