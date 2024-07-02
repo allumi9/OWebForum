@@ -21,26 +21,4 @@ public class OWebForumApplication {
 		SpringApplication.run(OWebForumApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner run(RoleRepository roleRepository, AppUserRepository appUserRepository, PasswordEncoder passwordEncoder){
-		return args ->{
-			if(roleRepository.findByAuthority("ADMIN").isPresent()){
-				return;
-			}
-			Role adminRole = roleRepository.save(new Role("ADMIN"));
-			roleRepository.save(new Role("USER"));
-
-			Set<Role> roles = new HashSet<>();
-			roles.add(adminRole);
-
-			AppUser admin = new AppUser(
-					passwordEncoder.encode("1"),
-					"max@gmail",
-					"admin",
-					4, LocalDate.now(), roles, false, true);
-			appUserRepository.save(admin);
-		};
-
-	}
-
 }

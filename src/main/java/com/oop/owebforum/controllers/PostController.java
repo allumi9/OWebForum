@@ -38,7 +38,7 @@ public class PostController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/post/{id}")
+    @GetMapping("/post/show/{id}")
     public String showPostById(@PathVariable Long id, Model model){
         Post post = postRepository.getReferenceById(id);
 
@@ -70,7 +70,6 @@ public class PostController {
         Optional<AppUser> optionalUser = appUserRepository.findByUsername(userDetails.getUsername());
         if (optionalUser.isPresent()) {
             AppUser loggedInUser = optionalUser.get();
-            post.setCreatedAt(LocalDateTime.now());
 
             Optional<Category> categoryOptional = categoryRepository.findByName(formCategoryName);
             if (categoryOptional.isPresent()) {
