@@ -15,7 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 public class Role implements GrantedAuthority {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Use IDENTITY for auto-increment columns
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
     private Integer roleId;
 
@@ -23,11 +23,6 @@ public class Role implements GrantedAuthority {
 
     public Role(String authority){
         this.authority = authority;
-    }
-
-    public Role(Integer roleId, String authority){
-        this.authority = authority;
-        this.roleId = roleId;
     }
 
 }

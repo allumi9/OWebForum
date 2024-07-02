@@ -76,14 +76,14 @@
         <li><a href="#">Categories</a></li>
         <li><a href="post/new">New Post</a></li>
         <li><a href="#">Profile</a></li>
-        <li><a href="#">Logout</a></li>
+        <li><a href="/logout">Logout</a></li>
     </ul>
 </nav>
 <main>
     <div class="forum-section">
         <h2>Recent Posts</h2>
         <div th:each="post : ${posts}" class="forum-thread">
-            <h3><a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}">Post Title</a></h3>
+            <h3><a th:href="@{/post/show/{id}(id=${post.id})}" th:text="${post.title}">Post Title</a></h3>
             <p th:text="'Posted by ' + ${post.originalPoster.username} + ' on ' + ${#temporals.format(post.createdAt, 'MMMM dd, yyyy')}">Posted by User on Date</p>
 
         </div>
