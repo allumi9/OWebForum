@@ -1,14 +1,19 @@
 package com.oop.owebforum;
+import com.oop.owebforum.controllers.PostController;
 import com.oop.owebforum.entities.AppUser;
+import com.oop.owebforum.entities.Category;
+import com.oop.owebforum.entities.Post;
 import com.oop.owebforum.entities.Role;
 import com.oop.owebforum.repositories.AppUserRepository;
 import com.oop.owebforum.repositories.RoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,6 +41,7 @@ public class DataInitializer {
                     "admin",
                     4, LocalDate.now(), roles, false, true);
             appUserRepository.save(admin);
+
         };
     }
 }

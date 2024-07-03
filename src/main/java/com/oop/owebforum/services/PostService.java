@@ -1,6 +1,7 @@
 package com.oop.owebforum.services;
 
 import com.oop.owebforum.entities.AppUser;
+import com.oop.owebforum.entities.Category;
 import com.oop.owebforum.entities.Post;
 import com.oop.owebforum.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,10 @@ public class PostService implements  IPostService{
 
     public List<Post> getAllPosts() {
         return postRepository.findAll();
+    }
+
+    public List<Post> getAllPostsByCategory(Category category){
+            return postRepository.findAllByCategory(category);
     }
 
 }
