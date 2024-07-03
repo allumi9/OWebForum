@@ -42,7 +42,12 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/post/new/*").hasRole("USER")
                         .requestMatchers("/profile/**").hasRole("USER")
-                        .requestMatchers("/home", "/register", "/categories/**", "/posts/show/*").permitAll()
+                        .requestMatchers("/home",
+                                "/register",
+                                "/categories/**",
+                                "/posts/show/*",
+                                "/error",
+                                "/category/*").permitAll()
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login")

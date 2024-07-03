@@ -1,6 +1,7 @@
 package com.oop.owebforum.repositories;
 
 
+import com.oop.owebforum.entities.Category;
 import com.oop.owebforum.entities.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,4 +14,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findById(Long id);
+
+    List<Post> findAllByCategory(Category category);
 }
