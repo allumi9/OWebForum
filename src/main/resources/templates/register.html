@@ -3,24 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign up</title>
+    <style>
+        .register-button{
+            border-style: none;
+            background-color: #333333;
+            color: #f4f4f4;
+            font-size: 15px;
+            padding: 5px 10px;
+            margin-top: 20px;
+            margin-left: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .home-button{
+            border-style: none;
+            background-color: #333333;
+            color: #f4f4f4;
+            font-size: 15px;
+            padding: 5px 10px;
+            margin-top: 20px;
+            margin-left: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .home-button:hover{
+            opacity: 0.5;
+        }
+        .register-button:hover{
+            opacity: 0.5;
+        }
+
+        .registration-form{
+            margin: 10px;
+            border-style: solid;
+            padding-bottom: 20px;
+        }
+        .single-input{
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        input{
+            width: 50%;
+        }
+        h1{
+            text-align: center;
+        }
+        p{
+            margin-left:20px;
+        }
+
+    </style>
 </head>
 <body>
 
 <form action="#" th:action="@{/register}" th:object="${userRegistrationDTO}" th:method="post">
-    <label for="username">Username: </label>
-    <input type="text" id="username" th:field="*{username}">
-    <br>
 
-    <label for="email">Email: </label>
-    <input type="email" id="email" th:field="*{email}">
-    <br>
 
-    <label for="password">Password: </label>
-    <input type="password" id="password" th:field="*{password}">
-    <br>
+    <div class="registration-form">
 
-    <button type="submit">Register</button>
+        <h1>Sign Up</h1>
 
+        <div class="single-input">
+            <label for="username">Username: </label>
+            <br>
+            <input type="text" id="username" th:field="*{username}" class="input-field">
+        </div>
+
+        <div class="single-input">
+            <label for="email">Email: </label>
+            <br>
+            <input type="email" id="email" th:field="*{email}">
+        </div>
+
+        <div class="single-input">
+            <label for="password">Password: </label>
+            <br>
+            <input type="password" id="password" th:field="*{password}">
+        </div>
+
+        <button type="submit" class="register-button">REGISTER</button>
+        <br>
+        <button type="button" class="home-button" onclick="location.href='home'">HOME</button>
+        <br>
+        <p><a href="/login">I already have an account.</a></p>
+
+
+    </div>
 </form>
 
 </body>

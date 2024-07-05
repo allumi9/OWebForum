@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <title th:text="${postTitle}"></title>
     <style>
-        h1{
+        h1 {
             font-family: "Roboto Light", serif;
             align-content: center;
             height: 75px;
             background-color: #4CAF50;
             color: white;
         }
-        h3{
+        h3 {
             font-family: "Roboto Light", serif;
             align-content: center;
             width: 200px;
             height: 50px;
         }
-        p{
+        p {
             font-family: "Roboto Light", serif;
             align-content: center;
         }
@@ -26,13 +26,15 @@
 <body>
 
 <h1 th:text="${postTitle}">Post title</h1>
-<h3 th:text="'Posted by ' + ${op} + ' at ' + ${createdAt} + ' in ' + ${category}">Posted by User at Date</h3>
+<h3>
+    <span>Posted by </span>
+    <a th:href="@{/profile/get/{username}(username=${op})}" th:text="${op}">User</a>
+    <span th:text="' at ' + ${createdAt} + ' in ' + ${category}"> at Date in Category</span>
+</h3>
 
 <p th:text="${content}">content</p>
 
 <button type="button" onclick="location.href='/home'">Home</button>
-
-
 
 </body>
 </html>
