@@ -38,6 +38,7 @@ public class ProfileController {
         model.addAttribute("dateOfRegistration", appUser.get().getDateOfRegistration());
         List<Post> posts = postRepository.findAllByOriginalPoster(appUser.get());
         model.addAttribute("posts", posts);
+        model.addAttribute("karma", appUser.get().getKarma());
 
         return "profile_page";
     }

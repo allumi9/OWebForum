@@ -8,17 +8,36 @@
             padding: 1rem;
             border: 1px solid #ccc;
             margin-bottom: 0.5rem;
+            border-radius: 10px;
         }
         .post:hover {
             background-color: #f9f9f9;
         }
+
+        .username-header{
+            background-color: #4CAF50;
+            color: #f4f4f4;
+            padding-bottom: 5px;
+            padding-top: 5px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .registration-date-text{
+            color: rgb(96,96,96);
+        }
+
+
     </style>
 </head>
 <body>
 
 <div>
-    <h1 th:text="${username}">Username</h1>
-    <h3 th:text="'Registered at ' + ${dateOfRegistration}">Registered at Date</h3>
+    <h1 class="username-header" th:text="${username}">Username</h1>
+    <p class="registration-date-text" th:text="'Registered at ' + ${dateOfRegistration}">Registered at Date</p>
+    <p th:text="${karma} + ' karma.'">
+        Karma
+    </p>
     <div th:each="post : ${posts}" class="post">
         <h3><a th:href="@{/post/show/{id}(id=${post.id})}" th:text="${post.title}">Post Title</a></h3>
         <p th:text="'Posted by ' + ${post.originalPoster.username} + ' on ' + ${#temporals.format(post.createdAt, 'MMMM dd, yyyy')}">Posted by User on Date</p>
