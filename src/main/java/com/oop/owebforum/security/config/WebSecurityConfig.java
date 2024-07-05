@@ -41,13 +41,13 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/post/new/*").hasRole("USER")
-                        .requestMatchers("/profile/**").hasRole("USER")
                         .requestMatchers("/home",
                                 "/register",
                                 "/categories/**",
                                 "/posts/show/*",
                                 "/error",
-                                "/category/*").permitAll()
+                                "/category/*",
+                                "/profile/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login")

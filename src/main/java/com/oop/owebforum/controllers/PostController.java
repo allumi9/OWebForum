@@ -51,8 +51,13 @@ public class PostController {
     }
 
     @GetMapping("/home")
-    public String showHomePage(Model model) {
+    public String showHomePage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         List<Post> recentPosts = postService.getAllPosts();
+
+        if(userDetails != null){
+            model.addAttribute("username", userDetails.getUsername());
+        }
+
         model.addAttribute("posts", recentPosts);
         return "home";
     }
