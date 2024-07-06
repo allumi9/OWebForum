@@ -21,12 +21,63 @@
             padding-top: 5px;
             text-align: center;
             border-radius: 10px;
+            margin-bottom: 0;
         }
 
         .registration-date-text{
+            margin-bottom: 2px;
+            margin-top: 2px;
             color: rgb(96,96,96);
+            font-size: 12px;
         }
 
+        .karma{
+            margin-top:0;
+            margin-bottom: 0;
+        }
+
+        button{
+            border-style: solid;
+            border-radius: 25px;
+            padding: 5px 10px;
+            background-color: grey;
+            color: #f4f4f4;
+        }
+
+        .home-button{
+            font-family: Arial, serif;
+            padding: 12px 12px;
+            border-style: none;
+            font-size: 18px;
+            background-color: #333333;
+            transition: opacity 0.3s;
+            justify-self: end;
+        }
+
+        button:hover{
+            opacity: 0.7;
+            cursor: pointer;
+        }
+
+        .controls-block{
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            align-items: center;
+            gap: 1rem;
+            padding: 1% 1%;
+            border-style: solid;
+            border-color: #575757;
+            border-radius: 20px;
+            border-width: 1px;
+            max-width: 100%;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .user-info{
+            grid-column: 1 / 2;
+            margin-left: 10%;
+        }
 
     </style>
 </head>
@@ -34,10 +85,21 @@
 
 <div>
     <h1 class="username-header" th:text="${username}">Username</h1>
-    <p class="registration-date-text" th:text="'Registered at ' + ${dateOfRegistration}">Registered at Date</p>
-    <p th:text="${karma} + ' karma.'">
-        Karma
-    </p>
+    <div class="controls-block">
+        <div class="user-info">
+
+            <p class="registration-date-text" th:text="'Registered at ' + ${dateOfRegistration}">
+                Registered at Date
+            </p>
+
+            <p class="karma" th:text="${karma} + ' karma.'">
+                Karma
+            </p>
+        </div>
+
+        <button class="home-button" onclick="location.href='/home'">Home</button>
+    </div>
+
     <div th:each="post : ${posts}" class="post">
         <h3><a th:href="@{/post/show/{id}(id=${post.id})}" th:text="${post.title}">Post Title</a></h3>
         <p th:text="'Posted by ' + ${post.originalPoster.username} + ' on ' + ${#temporals.format(post.createdAt, 'MMMM dd, yyyy')}">Posted by User on Date</p>

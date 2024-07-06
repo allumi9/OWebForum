@@ -31,10 +31,13 @@ public class Post {
     private AppUser originalPoster;
 
     private String title;
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_name", nullable = false)
     private Category category;
 
     private LocalDateTime createdAt;
+    private int rating;
+
 }
