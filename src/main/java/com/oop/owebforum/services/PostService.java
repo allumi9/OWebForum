@@ -39,8 +39,8 @@ public class PostService implements  IPostService{
         return postRepository.findAll();
     }
 
-    public List<Post> getAllPostsByCategory(Category category){
-            return postRepository.findAllByCategory(category);
+    public List<Post> getRecentPosts(){
+        return postRepository.findAllByCreatedAtAfterOrderByCreatedAt(LocalDateTime.now().minusDays(1));
     }
 
     public List<Post> getAllPostsByCategoryOrderByRatingDesc(Category category){
