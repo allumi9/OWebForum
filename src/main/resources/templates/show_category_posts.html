@@ -73,6 +73,7 @@
             border-radius: 10px;
             border-width: 1px;
             max-width: 100%;
+            overflow: hidden;
         }
 
         .search-bar{
@@ -81,6 +82,14 @@
             padding: 6px 16px;
             flex-grow: 1;
             margin-right: 10px
+        }
+        .rating{
+            margin-top: 5px;
+            display: inline-block;
+            padding: 15px 15px;
+            border-radius: 5px;
+            color: white;
+            background-color: #575757;
         }
     </style>
 </head>
@@ -100,6 +109,9 @@
     <div th:each="post : ${posts}" class="forum-thread">
         <h3><a th:href="@{/post/show/{id}(id=${post.id})}" th:text="${post.title}">Post Title</a></h3>
         <p th:text="'Posted by ' + ${post.originalPoster.username} + ' on ' + ${#temporals.format(post.createdAt, 'MMMM dd, yyyy')}">Posted by User on Date</p>
+        <p class="rating" th:text="${post.rating}">
+            +0
+        </p>
     </div>
 
 </div>

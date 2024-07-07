@@ -47,6 +47,9 @@ public class PostController {
         model.addAttribute("content", post.getContent());
         model.addAttribute("createdAt", post.getCreatedAt().withNano(0).toString());
         model.addAttribute("category", post.getCategory().getName());
+        model.addAttribute("rating", post.getRating());
+        model.addAttribute("postid", id);
+
         return "show_post_by_id";
     }
 

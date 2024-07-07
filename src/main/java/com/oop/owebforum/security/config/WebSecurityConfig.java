@@ -44,7 +44,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/home",
                                 "/register",
                                 "/categories/**",
-                                "/posts/show/*",
+                                "/post/show/*",
                                 "/error",
                                 "/category/*",
                                 "/profile/**").permitAll()

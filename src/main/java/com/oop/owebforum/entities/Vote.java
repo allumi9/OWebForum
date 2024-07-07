@@ -11,12 +11,15 @@ import lombok.Setter;
 @Entity
 public class Vote {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "vote_id")
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private VoteState state;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn(name = "voter")
+    @ManyToOne
+    @JoinColumn(name = "voter_id", referencedColumnName = "user_id", nullable = false)
     private AppUser voter;
 
     @ManyToOne

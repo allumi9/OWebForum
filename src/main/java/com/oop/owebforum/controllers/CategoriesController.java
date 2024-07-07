@@ -32,7 +32,7 @@ public class CategoriesController {
             model.addAttribute("error", "Category not found");
             return "show_category_posts";
         }
-        List<Post> posts = postService.getAllPostsByCategory(categoryRepository.findByName(categoryName).get());
+        List<Post> posts = postService.getAllPostsByCategoryOrderByRatingDesc(categoryRepository.findByName(categoryName).get());
         model.addAttribute("posts", posts);
 
         return "show_category_posts";

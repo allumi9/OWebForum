@@ -5,6 +5,11 @@ import com.oop.owebforum.entities.Post;
 import com.oop.owebforum.repositories.AppUserRepository;
 import com.oop.owebforum.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,11 +32,23 @@ public class ProfileController {
         this.postRepository = postRepository;
     }
 
+    @GetMapping("/profile/get/")
+    public String redirectNotLoggedInUserToLogin(@AuthenticationPrincipal UserDetails userDetails) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "redirect:/login";
+        }
+
+        return "redirect:/profile/get/" + userDetails.getUsername();
+    }
+
     @GetMapping("/profile/get/{username}")
-    public String getUserProfile(@PathVariable String username, Model model){
+    public String getUserProfile(@PathVariable String username,
+                                 Model model){
         Optional<AppUser> appUser = appUserRepository.findByUsername(username);
+
         if(appUser.isEmpty()){
-            System.out.println("User not found: " + username);
             return "error";
         }
         model.addAttribute("username", username);

@@ -46,6 +46,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            transition: background-color 0.3s;
         }
         button:hover {
             background-color: #45a049;
@@ -54,6 +55,9 @@
             margin-top: 15px;
             margin-left: 15px;
             background-color: rebeccapurple;
+        }
+        .home-button:hover{
+            background-color: #5c2f8a;
         }
     </style>
 </head>
@@ -83,7 +87,7 @@
     </div>
     <div>
         <button type="submit">Create Post</button>
-        <button type="button" class="home-button">Go home</button>
+        <button type="button" class="home-button" onclick="location.href='/home'">Go home</button>
     </div>
 </form>
 </body>

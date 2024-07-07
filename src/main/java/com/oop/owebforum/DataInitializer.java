@@ -5,6 +5,8 @@ import com.oop.owebforum.entities.Category;
 import com.oop.owebforum.entities.Post;
 import com.oop.owebforum.entities.Role;
 import com.oop.owebforum.repositories.AppUserRepository;
+import com.oop.owebforum.repositories.CategoryRepository;
+import com.oop.owebforum.repositories.PostRepository;
 import com.oop.owebforum.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,7 +23,12 @@ import java.util.Set;
 public class DataInitializer {
 
     @Bean
-    CommandLineRunner run(RoleRepository roleRepository, AppUserRepository appUserRepository, PasswordEncoder passwordEncoder){
+    CommandLineRunner run(RoleRepository roleRepository,
+                          AppUserRepository appUserRepository,
+                          PasswordEncoder passwordEncoder,
+                          PostRepository postRepository,
+                          PostController postController,
+                          CategoryRepository categoryRepository){
         return args -> {
             if(appUserRepository.findByUsername("admin").isPresent()){
                 return;
@@ -41,6 +48,15 @@ public class DataInitializer {
                     "admin",
                     4, LocalDate.now(), roles, false, true);
             appUserRepository.save(admin);
+
+            Category category = categoryRepository.findByName("Politics").get();
+
+            Post post = new Post(1, admin, "Politics are boring!!!",
+                    "boo!! fuck politics!!!",
+                    category,
+                    LocalDateTime.now(),
+                    0);
+            postRepository.save(post);
 
         };
     }

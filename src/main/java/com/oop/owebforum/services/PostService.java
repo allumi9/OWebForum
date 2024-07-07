@@ -43,4 +43,8 @@ public class PostService implements  IPostService{
             return postRepository.findAllByCategory(category);
     }
 
+    public List<Post> getAllPostsByCategoryOrderByRatingDesc(Category category){
+        return postRepository.findAllByCategoryOrderByRatingDesc(category);
+    }
+
 }

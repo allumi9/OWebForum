@@ -45,6 +45,7 @@
             cursor: pointer;
             font-size: 16px;
             margin-bottom: 10px;
+            transition: background-color 0.3s;
         }
         .login-container button:hover {
             background-color: #45a049;
@@ -55,6 +56,24 @@
         .login-container button#signUp:hover {
             background-color: #1E88E5;
         }
+
+        .login-container .home-button{
+            background-color: #592e9a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .login-container .home-button:hover{
+            background-color: #3e236b;
+        }
+
     </style>
 </head>
 <body>
@@ -71,6 +90,7 @@
 
         <button id="signUp" type="button" onclick="location.href='/register'">Sign Up</button>
     </form>
+    <button class="home-button" onclick="location.href='/home'">Home</button>
 </div>
 </body>
 </html>
