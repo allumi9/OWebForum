@@ -7,6 +7,7 @@ import com.oop.owebforum.enums.VoteState;
 import com.oop.owebforum.repositories.AppUserRepository;
 import com.oop.owebforum.repositories.PostRepository;
 import com.oop.owebforum.repositories.VoteRepository;
+import com.oop.owebforum.services.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,14 +24,17 @@ public class VoteController {
     private final VoteRepository voteRepository;
     private final AppUserRepository appUserRepository;
     private final PostRepository postRepository;
+    private AppUserService appUserService;
 
     @Autowired
     public VoteController(VoteRepository voteRepository,
                           AppUserRepository appUserRepository,
-                          PostRepository postRepository) {
+                          PostRepository postRepository,
+                          AppUserService appUserService) {
         this.voteRepository = voteRepository;
         this.appUserRepository = appUserRepository;
         this.postRepository = postRepository;
+        this.appUserService = appUserService;
     }
 
     @PostMapping("/post/{id}/vote")
@@ -40,6 +44,7 @@ public class VoteController {
         Post post = postRepository.findById(id).orElseThrow(() -> new Exception("Post not found"));
         AppUser appUser = appUserRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new Exception("User not found"));
+
 
         Optional<Vote> optionalVote = voteRepository.findByVoterAndPost(appUser, post);
         if (optionalVote.isPresent()) {
@@ -77,6 +82,7 @@ public class VoteController {
             voteRepository.save(newVote);
         }
 
+        appUserService.updateAppUserKarma(post.getOriginalPoster());
         postRepository.save(post);
         return "redirect:/post/show/" + post.getId();
     }

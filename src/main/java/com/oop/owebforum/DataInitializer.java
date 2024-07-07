@@ -46,7 +46,7 @@ public class DataInitializer {
                     passwordEncoder.encode("1"),
                     "max@gmail",
                     "admin",
-                    4, LocalDate.now(), roles, false, true);
+                    0, LocalDate.now(), roles, false, true);
             appUserRepository.save(admin);
 
             Category category = categoryRepository.findByName("Politics").get();
