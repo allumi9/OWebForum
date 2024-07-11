@@ -1,8 +1,10 @@
 package com.oop.owebforum.controllers;
 import com.oop.owebforum.entities.Category;
+import com.oop.owebforum.entities.Comment;
 import com.oop.owebforum.entities.Post;
 import com.oop.owebforum.entities.AppUser;
 import com.oop.owebforum.repositories.CategoryRepository;
+import com.oop.owebforum.repositories.CommentRepository;
 import com.oop.owebforum.repositories.PostRepository;
 
 import com.oop.owebforum.services.PostService;
@@ -26,22 +28,27 @@ public class PostController {
     private AppUserRepository appUserRepository;
     private PostRepository postRepository;
     private CategoryRepository categoryRepository;
+    private CommentRepository commentRepository;
 
     @Autowired
     public PostController(PostService postService,
                           AppUserRepository appUserRepository,
                           PostRepository postRepository,
-                          CategoryRepository categoryRepository){
+                          CategoryRepository categoryRepository,
+                          CommentRepository commentRepository){
         this.appUserRepository = appUserRepository;
         this.postService = postService;
         this.postRepository = postRepository;
         this.categoryRepository = categoryRepository;
+        this.commentRepository = commentRepository;
     }
 
     @GetMapping("/post/show/{id}")
     public String showPostById(@PathVariable Long id, Model model){
-        Post post = postRepository.getReferenceById(id);
+        Post post = postRepository.findById(id).get();
+        List<Comment> comments = commentRepository.findAllByOriginalPost(post);
 
+        model.addAttribute("comments", comments);
         model.addAttribute("postTitle", post.getTitle());
         model.addAttribute("op", post.getOriginalPoster().getUsername());
         model.addAttribute("content", post.getContent());

@@ -23,14 +23,14 @@
             font-size: 12px;
         }
 
-        .post-content{
+        .post-content {
             font-family: Arial, serif;
             font-size: 18px;
             margin-top: 10px;
             margin-bottom: 10px;
         }
 
-        button{
+        button {
             border-style: solid;
             border-radius: 25px;
             padding: 5px 10px;
@@ -39,7 +39,7 @@
             margin-right: 10px;
         }
 
-        .home-button{
+        .home-button {
             font-family: Arial, serif;
             padding: 22px 16px;
             border-radius: 15px;
@@ -48,7 +48,7 @@
             transition: opacity 0.3s;
         }
 
-        button:hover{
+        button:hover {
             opacity: 0.7;
             cursor: pointer;
         }
@@ -66,38 +66,74 @@
             max-width: 100%;
         }
 
+        .add-comment-block {
+            flex-grow: 1;
+            display: flex;
+            padding: 10px 5px;
+            border-radius: 15px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            background-color: #f4f4f4;
+        }
+
+        .add-comment-block form {
+            display: flex;
+            width: 100%;
+        }
+
         .comment-input {
             flex-grow: 1;
-            padding: 5px;
-            border-radius: 20px;
+            padding: 10px 5px;
+            border-radius: 10px;
             border: 1px solid #ccc;
             margin-right: 10px;
         }
 
-        .voting-block{
-            border-style: solid;
-            border-color: grey;
+        .voting-block {
+            border: 1px solid #ccc;
+            background-color: #f4f4f4;
             border-radius: 20px;
             padding: 1%;
             max-width: 27%;
             margin-right: 10px;
         }
-        .voting-block-rating-number{
+
+        .voting-block-rating-number {
             display: inline-block;
             background-color: #575757;
             margin-bottom: 0;
             margin-top: 0;
-            padding-right: 10px;
-            padding-left: 10px;
+            padding: 0 10px;
             border-radius: 20px;
         }
 
-        .voting-block-buttons{
+        .voting-block-buttons {
             display: inline-block;
         }
 
-        .rating{
+        .rating {
             color: #f4f4f4;
+        }
+
+        .comment-thread{
+            margin-top: 10px;
+            border-style: solid;
+            border-radius: 10px;
+            padding: 1%;
+            background-color: #f4f4f4;
+            border-color: #575757;
+            border-width: 1px;
+        }
+
+        .comment-thread h3{
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .comment-date{
+            font-size: 14px;
+            color: #575757;
+            margin-bottom: 5px;
         }
 
     </style>
@@ -118,7 +154,7 @@
     <button class="home-button" type="button" onclick="location.href='/home'">HOME</button>
     <div class="voting-block">
 
-        <form class="voting-block-buttons" th:action="@{/post/{id}/vote(id=${postid})}" method="post" >
+        <form class="voting-block-buttons" th:action="@{/post/{id}/vote(id=${postid})}" method="post">
             <button class="upvote-button" name="btn" value="up" type="submit">&uarr;</button>
             <button class="downvote-button" name="btn" value="down" type="submit">&darr;</button>
         </form>
@@ -131,13 +167,27 @@
 
     </div>
 
-    <input class="comment-input" type="text" placeholder="Your comment">
-    <button class="add-comment-button" type="button">&#9998;</button>
-
-
+    <div class="add-comment-block">
+        <form th:action="@{/post/{id}/comment(id=${postid})}" method="post">
+            <input name="comment-input" class="comment-input" type="text" placeholder="Your comment">
+            <button class="add-comment-button" type="submit">&#9998;</button>
+        </form>
+    </div>
 </div>
 
-<!-- TO-DO: COMMENTS TO THE POST-->
+<div class="comment-block">
+    <div th:each="comment : ${comments}" class="comment-thread">
+        <h3 th:text="${comment.getAppUser().username}">
+            Commenter username
+        </h3>
+        <p th:text="${comment.getContent()}">
+            Content
+        </p>
+        <p th:text="${comment.getCreatedAt()}" class="comment-date">
+            Date
+        </p>
+    </div>
+</div>
 
 </body>
 </html>
