@@ -4,6 +4,7 @@ import com.oop.owebforum.entities.AppUser;
 import com.oop.owebforum.entities.Post;
 import com.oop.owebforum.repositories.AppUserRepository;
 import com.oop.owebforum.repositories.PostRepository;
+import com.oop.owebforum.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,18 +23,16 @@ import java.util.Optional;
 @Controller
 public class ProfileController {
 
-    private AppUserRepository appUserRepository;
-    private PostRepository postRepository;
+    private ProfileService profileService;
 
     @Autowired
-    public ProfileController(AppUserRepository appUserRepository,
-                             PostRepository postRepository){
-        this.appUserRepository = appUserRepository;
-        this.postRepository = postRepository;
+    public ProfileController(ProfileService profileService){
+        this.profileService = profileService;
     }
 
     @GetMapping("/profile/get/")
     public String redirectNotLoggedInUserToLogin(@AuthenticationPrincipal UserDetails userDetails) {
+        // ще одні редайректи тому в контролері
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
@@ -46,17 +45,7 @@ public class ProfileController {
     @GetMapping("/profile/get/{username}")
     public String getUserProfile(@PathVariable String username,
                                  Model model){
-        Optional<AppUser> appUser = appUserRepository.findByUsername(username);
-
-        if(appUser.isEmpty()){
-            return "error";
-        }
-
-        model.addAttribute("username", username);
-        model.addAttribute("dateOfRegistration", appUser.get().getDateOfRegistration());
-        List<Post> posts = postRepository.findAllByOriginalPosterOrderByRatingDesc(appUser.get());
-        model.addAttribute("posts", posts);
-        model.addAttribute("karma", appUser.get().getKarma());
+        profileService.getUserProfile(username, model);
 
         return "profile_page";
     }
