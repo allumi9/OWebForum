@@ -35,6 +35,11 @@ public class CategoriesController {
         List<Post> posts = postService.getAllPostsByCategoryOrderByRatingDesc(categoryRepository.findByName(categoryName).get());
         model.addAttribute("posts", posts);
 
+        /*Тут питання: логіка доволі проста,
+        тому створюючи окремий метод на це все в сервісі та ше й окремий сервіс,
+        чи не буде це просто додавати зайву функціональність, тим більше тут вроді логіка відображення
+         */
+
         return "show_category_posts";
     }
 

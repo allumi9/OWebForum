@@ -4,6 +4,7 @@ import com.oop.owebforum.entities.AppUser;
 import com.oop.owebforum.entities.dto.UserRegistrationDTO;
 import com.oop.owebforum.repositories.AppUserRepository;
 import com.oop.owebforum.repositories.RoleRepository;
+import com.oop.owebforum.services.RegistrationService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,15 +22,12 @@ import java.util.Set;
 public class RegistrationController {
 
     private AppUserRepository appUserRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
+    private RegistrationService registrationService;
     @Autowired
     public RegistrationController(AppUserRepository appUserRepository,
-                                  RoleRepository roleRepository,
-                                  PasswordEncoder passwordEncoder){
+                                  RegistrationService registrationService){
         this.appUserRepository = appUserRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
+        this.registrationService = registrationService;
     }
 
     @GetMapping("/register")
@@ -40,20 +38,12 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute UserRegistrationDTO userRegistrationDTO){
-        if(appUserRepository.findByUsername(userRegistrationDTO.getUsername()).isPresent()){
+
+        if(appUserRepository.findByUsername(userRegistrationDTO.getUsername()).isPresent()){ // знову є редайрект тому лишаю в контродері
             return "redirect:/register?error=usernameTaken";
         }
-        Set<Role> roleSet = new HashSet<>();
-        if(roleRepository.findByAuthority("USER").isPresent()){
-            roleSet.add(roleRepository.findByAuthority("USER").get());
-        }
 
-
-        AppUser appUser = new AppUser(passwordEncoder.encode(userRegistrationDTO.getPassword()),
-                userRegistrationDTO.getEmail(),
-                userRegistrationDTO.getUsername(),
-                0, LocalDate.now(), roleSet, false, true);
-        appUserRepository.save(appUser);
+        registrationService.registerUser(userRegistrationDTO);
 
         return "redirect:/login";
     }

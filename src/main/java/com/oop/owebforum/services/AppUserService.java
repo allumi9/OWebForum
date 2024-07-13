@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AppUserService implements UserDetailsService, IAppUserService {
+public class AppUserService implements UserDetailsService {
 
     private AppUserRepository appUserRepository;
     private PasswordEncoder passwordEncoder;
@@ -29,16 +29,10 @@ public class AppUserService implements UserDetailsService, IAppUserService {
         this.postRepository = postRepository;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public AppUser loadUserByUsername(String username) throws UsernameNotFoundException {
         return appUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found.",username)));
     }
-    @Override
-    public AppUser saveAppUser(AppUser appUser){
-        return appUserRepository.save(appUser);
-    }
-
     public void updateAppUserKarma(AppUser appUser){
         List<Post> posts = postRepository.findAllByOriginalPoster(appUser);
         int karma = 0;
