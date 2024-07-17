@@ -17,15 +17,12 @@ import java.util.List;
 public class AppUserService implements UserDetailsService {
 
     private AppUserRepository appUserRepository;
-    private PasswordEncoder passwordEncoder;
     private PostRepository postRepository;
 
     @Autowired
     public AppUserService(AppUserRepository appUserRepository,
-                          PasswordEncoder passwordEncoder,
                           PostRepository postRepository){
         this.appUserRepository = appUserRepository;
-        this.passwordEncoder = passwordEncoder;
         this.postRepository = postRepository;
     }
 
