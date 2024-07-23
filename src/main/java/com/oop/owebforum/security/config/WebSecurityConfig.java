@@ -65,15 +65,15 @@ public class WebSecurityConfig {
                                 "/profile/**",
                                 "/signin").permitAll()
                         .anyRequest().authenticated())
-                .exceptionHandling(exception -> exception.
-                        authenticationEntryPoint(jwtAuthEntryPoint)
-                        .accessDeniedPage("/login"))
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(jwtAuthEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll())
                 .logout(logout -> logout
+                        .deleteCookies("jwt")
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()

@@ -15,8 +15,8 @@ import java.util.Optional;
 @Service
 public class VoteService {
 
-    private final VoteRepository voteRepository;
-    private final PostRepository postRepository;
+    private VoteRepository voteRepository;
+    private PostRepository postRepository;
     private AppUserService appUserService;
     private PostService postService;
 
