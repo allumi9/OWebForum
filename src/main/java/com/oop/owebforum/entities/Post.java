@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Builder
 @Entity
-public class Post {
+public class Post implements VoteSubject{
     @Id
     @SequenceGenerator(
             name="post_sequence",

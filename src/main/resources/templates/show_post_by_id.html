@@ -136,6 +136,33 @@
             margin-bottom: 5px;
         }
 
+        .voting-block-comments{
+            display: flex;
+            align-items: center;
+            padding-bottom: 1%;
+            padding-top: 1%;
+            padding-left: 1%;
+            border-color: #575757;
+            border-radius: 10px;
+            border-width: 1px;
+            max-width: 100%;
+        }
+        .reply-input{
+            flex-grow: 1;
+            padding: 10px 5px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            width: 80%;
+        }
+        .add-reply-block{
+            flex-grow: 1;
+            padding: 10px 5px;
+            margin-left: 10px;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -185,6 +212,31 @@
         <p th:text="${comment.getCreatedAt()}" class="comment-date">
             Date
         </p>
+
+        <div class="voting-block-comments">
+
+            <form class="voting-block-buttons" th:action="@{/post/{id}/vote/comment/{commentID}(id=${postid}, commentID=${comment.id})}" method="post">
+                <button class="upvote-button-comment" name="btn-comment" value="up" type="submit">&uarr;</button>
+                <button class="downvote-button-comment" name="btn-comment" value="down" type="submit">&darr;</button>
+            </form>
+
+            <div class="voting-block-rating-number">
+                <p class="rating" th:text="${comment.getRating()}">
+                    +170
+                </p>
+            </div>
+<!--
+            <div class="add-reply-block">
+                <form th:action="@{/post/{id}/comment(id=${postid})}" method="post">
+                    <input name="reply-input" class="reply-input" type="text" placeholder="Your reply">
+                    <button class="add-reply-button" type="submit">&#9998;</button>
+                </form>
+            </div>
+-->
+
+
+        </div>
+
     </div>
 </div>
 
