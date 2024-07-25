@@ -25,7 +25,11 @@ public class Vote {
     private AppUser voter;
 
     @ManyToOne
-    @JoinColumn(name="post", nullable = false)
+    @JoinColumn(name="post")
     private Post post;
+
+    @ManyToOne
+    @JoinColumn(name="comment")
+    private Comment comment;
 
 }

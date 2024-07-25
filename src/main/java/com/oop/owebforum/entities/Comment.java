@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class Comment {
+public class Comment implements VoteSubject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
@@ -26,5 +26,6 @@ public class Comment {
     private AppUser appUser;
 
     private String content;
+    private int rating;
     private LocalDateTime createdAt;
 }

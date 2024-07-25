@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,6 +36,15 @@ public class VoteController {
                                    @AuthenticationPrincipal UserDetails userDetails,
                                    @PathVariable Long id) throws Exception {
         voteService.changePostRating(id, userDetails.getUsername(), action);
+
+        return "redirect:/post/show/" + id;
+    }
+
+    @PostMapping("/post/{id}/vote/comment/{commentID}")
+    public String changeCommentRating(@RequestParam("btn-comment") String action,
+                                   @AuthenticationPrincipal UserDetails userDetails,
+                                   @PathVariable Long id, @PathVariable Long commentID) throws Exception {
+        voteService.changeCommentRating(id, userDetails.getUsername(), action, commentID);
 
         return "redirect:/post/show/" + id;
     }

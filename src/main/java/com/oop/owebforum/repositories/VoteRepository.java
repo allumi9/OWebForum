@@ -1,6 +1,7 @@
 package com.oop.owebforum.repositories;
 
 import com.oop.owebforum.entities.AppUser;
+import com.oop.owebforum.entities.Comment;
 import com.oop.owebforum.entities.Post;
 import com.oop.owebforum.entities.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,5 +13,6 @@ import java.util.Optional;
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 
     Optional<Vote> findByVoterAndPost(AppUser voter, Post post);
+    Optional<Vote> findByVoterAndComment(AppUser voter, Comment comment);
 
 }

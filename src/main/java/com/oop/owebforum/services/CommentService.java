@@ -50,9 +50,14 @@ public class CommentService {
         Post post = postService.findByID(postID);
 
         comment.setAppUser(appUser);
-        comment.setCreatedAt(LocalDateTime.now());
+        comment.setCreatedAt(LocalDateTime.now().withNano(0));
         comment.setContent(input);
         comment.setOriginalPost(post);
+        comment.setRating(0);
+        commentRepository.save(comment);
+    }
+
+    public void save(Comment comment){
         commentRepository.save(comment);
     }
 
