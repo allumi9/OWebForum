@@ -1,12 +1,17 @@
-package com.oop.owebforum.services;
+package com.oop.owebforum.services.voteService;
 
 import com.oop.owebforum.entities.AppUser;
+import com.oop.owebforum.entities.Comment;
 import com.oop.owebforum.entities.Post;
 import com.oop.owebforum.entities.Vote;
 import com.oop.owebforum.enums.VoteState;
 import com.oop.owebforum.repositories.AppUserRepository;
 import com.oop.owebforum.repositories.PostRepository;
 import com.oop.owebforum.repositories.VoteRepository;
+import com.oop.owebforum.services.AppUserService;
+import com.oop.owebforum.services.CommentService;
+import com.oop.owebforum.services.PostService;
+import com.oop.owebforum.services.VoteService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +28,6 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class VoteServiceTests {
 
@@ -31,6 +35,8 @@ public class VoteServiceTests {
     private VoteRepository voteRepository;
     @Mock
     private AppUserService appUserService;
+    @Mock
+    private CommentService commentService;
     @Mock
     private PostService postService;
     @Mock
@@ -42,17 +48,19 @@ public class VoteServiceTests {
 
     private AppUser appUser;
     private Post post;
+    private Comment comment;
 
     @BeforeEach
     public void setUp() throws Exception {
         appUser = new AppUser();
         post = new Post();
+        comment = new Comment();
 
         when(appUserService.loadUserByUsername(anyString())).thenReturn(appUser);
         when(postService.findByID(anyLong())).thenReturn(post);
     }
 
-    // Downvote scnerios
+    // Downvote scenarios
     @Test
     public void testChangePostRating_DownvoteOnNullVote_ShouldSubtractOne() throws Exception {
         // Arrange
@@ -139,6 +147,104 @@ public class VoteServiceTests {
 
         // Assert
         Assertions.assertEquals(0, post.getRating());
+        verify(voteRepository).delete(any(Vote.class));
+    }
+
+    // Comment rating:
+
+    // Downvote scenarios
+    @Test
+    public void testChangeCommentRating_DownvoteOnNullVote_ShouldSubtractOne() throws Exception {
+        // Arrange
+        when(voteRepository.findByVoterAndComment(appUser, comment)).thenReturn(Optional.empty());
+        when(commentService.findCommentById(anyLong())).thenReturn(comment);
+        comment.setRating(0);
+
+        // Act
+        voteService.changeCommentRating(1L, "username", "down", 1L);
+
+        // Assert
+        Assertions.assertEquals(-1, comment.getRating());
+        verify(voteRepository).save(any(Vote.class));
+    }
+
+    @Test
+    public void testChangeCommentRating_DownvoteOnDownVote_ShouldAddOne() throws Exception {
+        // Arrange
+        Vote vote = Vote.builder().state(VoteState.DOWN).build();
+        when(voteRepository.findByVoterAndComment(appUser, comment)).thenReturn(Optional.of(vote));
+        when(commentService.findCommentById(anyLong())).thenReturn(comment);
+        comment.setRating(-1);
+
+        // Act
+        voteService.changeCommentRating(1L, "username", "down", 1L);
+
+        // Assert
+        Assertions.assertEquals(0, comment.getRating());
+        verify(voteRepository).delete(any(Vote.class));
+    }
+
+    @Test
+    public void testChangeCommentRating_DownvoteOnUpVote_ShouldSubtractTwo() throws Exception {
+        // Arrange
+        Vote vote = Vote.builder().state(VoteState.UP).build();
+        when(voteRepository.findByVoterAndComment(appUser, comment)).thenReturn(Optional.of(vote));
+        when(commentService.findCommentById(anyLong())).thenReturn(comment);
+        comment.setRating(1);
+
+        // Act
+        voteService.changeCommentRating(1L, "username", "down", 1L);
+
+        // Assert
+        Assertions.assertEquals(-1, comment.getRating());
+        verify(voteRepository).save(any(Vote.class));
+    }
+
+    // Upvote scenarios
+    @Test
+    public void testChangeCommentRating_UpvoteOnNullVote_ShouldAddOne() throws Exception {
+        // Arrange
+        when(voteRepository.findByVoterAndComment(appUser, comment)).thenReturn(Optional.empty());
+        when(commentService.findCommentById(anyLong())).thenReturn(comment);
+        comment.setRating(0);
+
+        // Act
+        voteService.changeCommentRating(1L, "username", "up", 1L);
+
+        // Assert
+        Assertions.assertEquals(1, comment.getRating());
+        verify(voteRepository).save(any(Vote.class));
+    }
+
+    @Test
+    public void testChangeCommentRating_UpvoteOnDownVote_ShouldAddTwo() throws Exception {
+        // Arrange
+        Vote vote = Vote.builder().state(VoteState.DOWN).build();
+        when(voteRepository.findByVoterAndComment(appUser, comment)).thenReturn(Optional.of(vote));
+        when(commentService.findCommentById(anyLong())).thenReturn(comment);
+        comment.setRating(-1);
+
+        // Act
+        voteService.changeCommentRating(1L, "username", "up", 1L);
+
+        // Assert
+        Assertions.assertEquals(1, comment.getRating());
+        verify(voteRepository).save(any(Vote.class));
+    }
+
+    @Test
+    public void testChangeCommentRating_UpvoteOnUpVote_ShouldSubtractOne() throws Exception {
+        // Arrange
+        Vote vote = Vote.builder().state(VoteState.UP).build();
+        when(voteRepository.findByVoterAndComment(appUser, comment)).thenReturn(Optional.of(vote));
+        when(commentService.findCommentById(anyLong())).thenReturn(comment);
+        comment.setRating(1);
+
+        // Act
+        voteService.changeCommentRating(1L, "username", "up", 1L);
+
+        // Assert
+        Assertions.assertEquals(0, comment.getRating());
         verify(voteRepository).delete(any(Vote.class));
     }
 }
