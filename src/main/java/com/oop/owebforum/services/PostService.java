@@ -50,7 +50,7 @@ public class PostService{
 
     public void makePostModelToShow(Model model, Long id) throws Exception {
         Post post = findByID(id);
-        List<Comment> comments = commentRepository.findAllByOriginalPost(post);
+        List<Comment> comments = commentRepository.findAllByOriginalPostWithReplies(post);
 
         model.addAttribute("comments", comments);
         model.addAttribute("postTitle", post.getTitle());

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CustomErrorController implements ErrorController {
 
-
     @GetMapping("/error")
     public String handleError(HttpServletRequest request) {
         Object status = request.getAttribute("javax.servlet.error.status_code");
@@ -22,7 +21,4 @@ public class CustomErrorController implements ErrorController {
         return "error";
     }
 
-    public String getErrorPath() {
-        return "/error";
-    }
 }
