@@ -4,6 +4,7 @@ import com.oop.owebforum.entities.Post;
 import com.oop.owebforum.entities.AppUser;
 import com.oop.owebforum.repositories.CategoryRepository;
 
+import com.oop.owebforum.services.AppUserService;
 import com.oop.owebforum.services.PostService;
 import com.oop.owebforum.repositories.AppUserRepository;
 import jakarta.annotation.PostConstruct;
@@ -20,14 +21,14 @@ import java.util.Optional;
 public class PostController {
 
     private PostService postService;
-    private AppUserRepository appUserRepository;
+    private AppUserService appUserService;
     private CategoryRepository categoryRepository;
 
     @Autowired
     public PostController(PostService postService,
-                          AppUserRepository appUserRepository,
+                          AppUserService appUserService,
                           CategoryRepository categoryRepository){
-        this.appUserRepository = appUserRepository;
+        this.appUserService = appUserService;
         this.postService = postService;
         this.categoryRepository = categoryRepository;
     }
@@ -54,37 +55,31 @@ public class PostController {
     public String createPost(@ModelAttribute Post post,
                              @AuthenticationPrincipal UserDetails userDetails,
                              @RequestParam(value = "formCategoryName") String formCategoryName) {
-        // Вся логіка тут, бо перевірки використовують редіректи шо сервіс робити не може
-        Optional<AppUser> optionalUser = appUserRepository.findByUsername(userDetails.getUsername());
-        if (optionalUser.isPresent()) {
-            AppUser loggedInUser = optionalUser.get();
+        AppUser appUser = appUserService.loadUserByUsername(userDetails.getUsername());
 
-            Optional<Category> categoryOptional = categoryRepository.findByName(formCategoryName);
-            if (categoryOptional.isPresent()) {
-                post.setCategory(categoryOptional.get());
-            } else {
-                return "redirect:/post/new?error=categoryNotFound";
-            }
-
-            postService.createPost(post, loggedInUser);
-            return "redirect:/home";
+        Optional<Category> categoryOptional = categoryRepository.findByName(formCategoryName);
+        if (categoryOptional.isPresent()) {
+            post.setCategory(categoryOptional.get());
         } else {
-            return "redirect:/login?error";
+            return "redirect:/post/new?error=categoryNotFound";
         }
+
+        postService.createPost(post, appUser);
+        return "redirect:/home";
     }
 
     @PostConstruct
     public void initCategories() {
         if (categoryRepository.count() == 0) {
-            categoryRepository.save(new Category(null, "Music"));
-            categoryRepository.save(new Category(null, "Games"));
-            categoryRepository.save(new Category(null, "Literature"));
-            categoryRepository.save(new Category(null, "Movies"));
-            categoryRepository.save(new Category(null, "Science"));
-            categoryRepository.save(new Category(null, "Politics"));
-            categoryRepository.save(new Category(null, "Sports"));
-            categoryRepository.save(new Category(null, "Pets"));
-            categoryRepository.save(new Category(null, "Other"));
+            categoryRepository.save(new Category(1L, "Music"));
+            categoryRepository.save(new Category(2L, "Games"));
+            categoryRepository.save(new Category(3L, "Literature"));
+            categoryRepository.save(new Category(4L, "Movies"));
+            categoryRepository.save(new Category(5L, "Science"));
+            categoryRepository.save(new Category(6L, "Politics"));
+            categoryRepository.save(new Category(7L, "Sports"));
+            categoryRepository.save(new Category(8L, "Pets"));
+            categoryRepository.save(new Category(9L, "Other"));
         }
     }
 

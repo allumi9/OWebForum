@@ -18,21 +18,14 @@ import java.util.Set;
 @Entity
 public class AppUser implements UserDetails {
     @Id
-    @SequenceGenerator(
-            name="user_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
-    )
-    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String password;
     private String email;
     private String username;
     private int karma;
+
     private LocalDate dateOfRegistration;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -48,7 +41,6 @@ public class AppUser implements UserDetails {
         super();
         this.authorities = new HashSet<Role>();
     }
-
 
     public AppUser(String password,
                    String email,

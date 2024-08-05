@@ -63,7 +63,8 @@ public class WebSecurityConfig {
                                 "/error",
                                 "/category/*",
                                 "/profile/**",
-                                "/signin").permitAll()
+                                "/signin",
+                                "/comment/**").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(jwtAuthEntryPoint))

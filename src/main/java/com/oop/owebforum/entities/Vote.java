@@ -14,22 +14,19 @@ import lombok.*;
 public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "vote_id")
     private Long id;
 
     @Enumerated(EnumType.STRING)
     private VoteState state;
 
     @ManyToOne
-    @JoinColumn(name = "voter_id", referencedColumnName = "user_id", nullable = false)
+    @JoinColumn(nullable = false)
     private AppUser voter;
 
     @ManyToOne
-    @JoinColumn(name="post")
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name="comment")
     private Comment comment;
 
 }

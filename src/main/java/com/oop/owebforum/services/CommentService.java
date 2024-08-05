@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -61,6 +62,26 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
+    public void addReply(String input, Long commentID,
+                         String username){
+        Comment reply = new Comment();
+        AppUser appUser = appUserService.loadUserByUsername(username);
+        if(commentRepository.findById(commentID).isEmpty()){
+            System.out.println("Original comment " + commentID + " is not present.");
+            return;
+        }
+        Comment originalComment = commentRepository.findById(commentID).get();
 
+        reply.setAppUser(appUser);
+        reply.setCreatedAt(LocalDateTime.now().withNano(0));
+        reply.setContent(input);
+        reply.setOriginalComment(originalComment);
+        reply.setRating(0);
+        commentRepository.save(reply);
+    }
+
+    public List<Comment> findRepliesByOriginalPost(Comment comment){
+        return commentRepository.findAllByOriginalComment(comment);
+    }
 
 }
