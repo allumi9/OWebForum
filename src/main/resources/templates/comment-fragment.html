@@ -1,7 +1,7 @@
 <div th:fragment="comment-fragment">
     <div th:each="comment : ${comments}" class="comment-thread">
 
-        <h3 th:text="${comment.getAppUser().username}">User</h3>
+        <h3><a th:href="@{/profile/get/{username}(username=${comment.getAppUser().username})}" th:text="${comment.getAppUser().username}">User</a></h3>
         <p th:text="${comment.getContent()}">Content</p>
         <p th:text="${comment.getCreatedAt()}" class="comment-date">Date</p>
 
