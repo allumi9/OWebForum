@@ -2,34 +2,28 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${postTitle}"></title>
+    <title th:text="${postTitle}">Post</title>
     <style>
         h1 {
             font-family: Arial, serif;
             text-align: center;
             background-color: #4CAF50;
             color: white;
-            padding-bottom: 10px;
-            padding-top: 10px;
-            margin-top: 5px;
-            margin-bottom: 5px;
+            padding: 10px;
+            margin: 10px 0;
             border-radius: 10px;
         }
         .post-info {
             font-family: Arial, serif;
             color: rgb(96,96,96);
-            margin-top: 5px;
-            margin-bottom: 5px;
+            margin: 10px 0;
             font-size: 12px;
         }
-
         .post-content {
             font-family: Arial, serif;
             font-size: 18px;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            margin: 10px 0;
         }
-
         button {
             border-style: solid;
             border-radius: 25px;
@@ -37,132 +31,101 @@
             background-color: grey;
             color: #f4f4f4;
             margin-right: 10px;
+            transition: opacity 0.3s;
         }
-
         .home-button {
             font-family: Arial, serif;
-            padding: 22px 16px;
+            padding: 20px 16px;
             border-radius: 15px;
             border-style: none;
             background-color: #333333;
-            transition: opacity 0.3s;
         }
-
         button:hover {
             opacity: 0.7;
             cursor: pointer;
         }
-
         .post-controls {
             display: flex;
             align-items: center;
-            padding-bottom: 1%;
-            padding-top: 1%;
-            padding-left: 1%;
-            border-style: solid;
-            border-color: #575757;
+            padding: 1%;
+            border: 1px solid #575757;
             border-radius: 20px;
-            border-width: 1px;
-            max-width: 100%;
+            background-color: #f4f4f4;
+            margin: 10px 0;
         }
-
         .add-comment-block {
             flex-grow: 1;
             display: flex;
-            padding: 10px 5px;
+            padding: 10px;
             border-radius: 15px;
             border: 1px solid #ccc;
-            margin-right: 10px;
-            background-color: #f4f4f4;
+            background-color: #fff;
         }
-
         .add-comment-block form {
             display: flex;
             width: 100%;
         }
-
         .comment-input {
             flex-grow: 1;
-            padding: 10px 5px;
+            padding: 10px;
             border-radius: 10px;
             border: 1px solid #ccc;
             margin-right: 10px;
         }
-
         .voting-block {
             border: 1px solid #ccc;
-            background-color: #f4f4f4;
+            background-color: #fff;
             border-radius: 20px;
             padding: 1%;
-            max-width: 27%;
             margin-right: 10px;
+            display: flex;
+            align-items: center;
         }
-
         .voting-block-rating-number {
-            display: inline-block;
             background-color: #575757;
-            margin-bottom: 0;
-            margin-top: 0;
             padding: 0 10px;
             border-radius: 20px;
-        }
-
-        .voting-block-buttons {
-            display: inline-block;
-        }
-
-        .rating {
             color: #f4f4f4;
+            margin: 0 10px;
         }
-
-        .comment-thread{
-            margin-top: 10px;
-            border-style: solid;
+        .comment-thread {
+            margin: 10px 0 0 20px;
+            border: 1px solid #575757;
             border-radius: 10px;
             padding: 1%;
             background-color: #f4f4f4;
-            border-color: #575757;
-            border-width: 1px;
         }
-
-        .comment-thread h3{
-            margin-top: 0;
-            margin-bottom: 5px;
-        }
-
-        .comment-date{
+        .comment-date {
             font-size: 14px;
             color: #575757;
             margin-bottom: 5px;
         }
-
-        .voting-block-comments{
+        .voting-block-comments {
             display: flex;
             align-items: center;
-            padding-bottom: 1%;
-            padding-top: 1%;
-            padding-left: 1%;
-            border-color: #575757;
+            padding: 1%;
             border-radius: 10px;
-            border-width: 1px;
-            max-width: 100%;
+            border: 1px solid #575757;
+            margin: 10px 0;
+            background-color: #fff;
         }
-        .reply-input{
+        .reply-input {
             flex-grow: 1;
-            padding: 10px 5px;
+            padding: 10px;
             border-radius: 10px;
             border: 1px solid #ccc;
             margin-right: 10px;
-            width: 80%;
         }
-        .add-reply-block{
+        .add-reply-block {
             flex-grow: 1;
-            padding: 10px 5px;
-            margin-left: 10px;
+            padding: 10px;
             border-radius: 10px;
-            margin-right: 10px;
         }
-
+        .reply-input-form {
+            width: 100%;
+            display: flex;
+            margin-right: 0;
+        }
     </style>
 </head>
 <body>
@@ -173,26 +136,18 @@
     <span th:text="' at ' + ${createdAt} + ' in ' + ${category}"> at Date in Category</span>
 </p>
 
-<p class="post-content" th:text="${content}">
-    Content
-</p>
+<p class="post-content" th:text="${content}">Content</p>
 <div class="post-controls">
     <button class="home-button" type="button" onclick="location.href='/home'">HOME</button>
     <div class="voting-block">
-
         <form class="voting-block-buttons" th:action="@{/post/{id}/vote(id=${postid})}" method="post">
             <button class="upvote-button" name="btn" value="up" type="submit">&uarr;</button>
             <button class="downvote-button" name="btn" value="down" type="submit">&darr;</button>
         </form>
-
         <div class="voting-block-rating-number">
-            <p class="rating" th:text="${rating}">
-                +170
-            </p>
+            <p class="rating" th:text="${rating}">+170</p>
         </div>
-
     </div>
-
     <div class="add-comment-block">
         <form th:action="@{/post/{id}/comment(id=${postid})}" method="post">
             <input name="comment-input" class="comment-input" type="text" placeholder="Your comment">
@@ -201,44 +156,7 @@
     </div>
 </div>
 
-<div class="comment-block">
-    <div th:each="comment : ${comments}" class="comment-thread">
-        <h3 th:text="${comment.getAppUser().username}">
-            Commenter username
-        </h3>
-        <p th:text="${comment.getContent()}">
-            Content
-        </p>
-        <p th:text="${comment.getCreatedAt()}" class="comment-date">
-            Date
-        </p>
-
-        <div class="voting-block-comments">
-
-            <form class="voting-block-buttons" th:action="@{/post/{id}/vote/comment/{commentID}(id=${postid}, commentID=${comment.id})}" method="post">
-                <button class="upvote-button-comment" name="btn-comment" value="up" type="submit">&uarr;</button>
-                <button class="downvote-button-comment" name="btn-comment" value="down" type="submit">&darr;</button>
-            </form>
-
-            <div class="voting-block-rating-number">
-                <p class="rating" th:text="${comment.getRating()}">
-                    +170
-                </p>
-            </div>
-<!--
-            <div class="add-reply-block">
-                <form th:action="@{/post/{id}/comment(id=${postid})}" method="post">
-                    <input name="reply-input" class="reply-input" type="text" placeholder="Your reply">
-                    <button class="add-reply-button" type="submit">&#9998;</button>
-                </form>
-            </div>
--->
-
-
-        </div>
-
-    </div>
-</div>
+<div class="comment-block" th:insert="~{comment-fragment :: comment-fragment (comments=${comments}, postid=${postid})}"></div>
 
 </body>
 </html>

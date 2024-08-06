@@ -1,0 +1,27 @@
+<div th:fragment="comment-fragment">
+    <div th:each="comment : ${comments}" class="comment-thread">
+
+        <h3><a th:href="@{/profile/get/{username}(username=${comment.getAppUser().username})}" th:text="${comment.getAppUser().username}">User</a></h3>
+        <p th:text="${comment.getContent()}">Content</p>
+        <p th:text="${comment.getCreatedAt()}" class="comment-date">Date</p>
+
+        <div class="voting-block-comments">
+            <form class="voting-block-buttons" th:action="@{/post/{id}/vote/comment/{commentID}(id=${postid}, commentID=${comment.id})}" method="post">
+                <button class="upvote-button-comment" name="btn-comment" value="up" type="submit">&uarr;</button>
+                <button class="downvote-button-comment" name="btn-comment" value="down" type="submit">&darr;</button>
+            </form>
+            <div class="voting-block-rating-number">
+                <p class="rating" th:text="${comment.getRating()}">+170</p>
+            </div>
+            <div class="add-reply-block">
+                <form th:action="@{/post/{id}/comment/{commentID}/reply(id=${postid}, commentID=${comment.id})}" method="post" class="reply-input-form">
+                    <input name="reply-input" class="reply-input" type="text" placeholder="Your reply">
+                    <button class="add-reply-button" type="submit">&#9998;</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div th:if="${comment.replies}" th:insert="::comment-fragment (comments=${comment.replies}, postid=${postid})"></div>
+    </div>
+</div>

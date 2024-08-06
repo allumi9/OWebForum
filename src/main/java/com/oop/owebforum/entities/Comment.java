@@ -1,12 +1,11 @@
 package com.oop.owebforum.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,18 +13,22 @@ import java.time.LocalDateTime;
 public class Comment implements VoteSubject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "original_post_id", nullable = false)
     private Post originalPost;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(nullable = false)
     private AppUser appUser;
 
     private String content;
     private int rating;
     private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Comment originalComment;
+
+    @OneToMany(mappedBy = "originalComment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comment> replies;
 }
