@@ -43,25 +43,4 @@ public class CommentController {
         return "redirect:/post/show/" + postID;
     }
 
-    @GetMapping("/comment/{commentID}")
-    public String getRepliesToComment(@PathVariable Long commentID,
-                                      Model model) throws Exception{
-        Comment comment = commentService.findCommentById(commentID);
-        model.addAttribute("commentID", commentID);
-        model.addAttribute("comment", comment);
-
-        model.addAttribute("originalCommentID", null);
-        model.addAttribute("originalPostID", null);
-        if(comment.getOriginalComment() != null){
-            model.addAttribute("originalCommentID", comment.getOriginalComment().getId());
-        } else {
-            model.addAttribute("originalPostID", comment.getOriginalPost().getId());
-        }
-
-        model.addAttribute("replies", commentService.findRepliesByOriginalPost(comment));
-
-
-        return "show_comment_replies";
-    }
-
 }
