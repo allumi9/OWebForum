@@ -8,6 +8,7 @@ import com.oop.owebforum.repositories.AppUserRepository;
 import com.oop.owebforum.repositories.CategoryRepository;
 import com.oop.owebforum.repositories.PostRepository;
 import com.oop.owebforum.repositories.RoleRepository;
+import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -28,12 +29,11 @@ public class DataInitializer {
                           PasswordEncoder passwordEncoder,
                           PostRepository postRepository,
                           PostController postController,
-                          CategoryRepository categoryRepository){
+                          CategoryRepository categoryRepository,
+                          Flyway flyway){
         return args -> {
-            if(appUserRepository.findByUsername("admin").isPresent()){
-                return;
-            }
 
+            /*
             Role adminRole = roleRepository.findByAuthority("ADMIN").orElseThrow(() -> new IllegalStateException("Admin role not found"));
             Role userRole = roleRepository.findByAuthority("USER").orElseThrow(() -> new IllegalStateException("User role not found"));
 
@@ -49,6 +49,7 @@ public class DataInitializer {
                     0, LocalDate.now(), roles, false, true);
             appUserRepository.save(admin);
 
+
             Category category = categoryRepository.findByName("Politics").get();
 
             Post post = new Post(1, admin, "Politics are boring!!!",
@@ -57,6 +58,8 @@ public class DataInitializer {
                     LocalDateTime.now(),
                     0);
             postRepository.save(post);
+
+             */
 
         };
     }

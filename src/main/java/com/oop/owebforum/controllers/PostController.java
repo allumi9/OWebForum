@@ -67,7 +67,7 @@ public class PostController {
         postService.createPost(post, appUser);
         return "redirect:/home";
     }
-
+/*
     @PostConstruct
     public void initCategories() {
         if (categoryRepository.count() == 0) {
@@ -82,5 +82,7 @@ public class PostController {
             categoryRepository.save(new Category(9L, "Other"));
         }
     }
+
+ */
 
 }

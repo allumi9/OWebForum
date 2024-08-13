@@ -1,0 +1,2 @@
+INSERT INTO app_user(id, date_of_registration, enabled, karma, locked, email, password, username)  VALUES
+    (1, '2024-08-13', true, 0, false, 'back@gmail.com', '$2a$10$0TTmUW4yZv715ct8zaz77.LmXa9RFa/xo71osJuoX/MMh71fyPzwW', 'admin');
