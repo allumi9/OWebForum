@@ -15,5 +15,4 @@ public class FlywayConfig {
             flyway.migrate();
         };
     }
-
 }
