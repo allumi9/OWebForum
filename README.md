@@ -1,5 +1,5 @@
 Hey! Thanks for looking into this project! It's a simple web forum app built with Java and Spring Boot. 
-The database I used was PostgreSQL but with a few tweaks I bellieve you could use any relational database, although some problems are to arise. 
+The database I used was PostgreSQL but with a few tweaks I bellieve you could use any relational database, although some problems are to be expected. 
 
 First clone the repo localy.
 Then make sure you have java(version 8 update 421 on mac) and maven installed.
